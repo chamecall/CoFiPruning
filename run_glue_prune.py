@@ -37,7 +37,6 @@ task_to_keys = {
 
 logger = logging.getLogger(__name__)
 
-
 def main():
     parser = HfArgumentParser(
         (ModelArguments, DataTrainingArguments, TrainingArguments, AdditionalArguments))

@@ -56,6 +56,8 @@ class CoFiBertForSequenceClassification(BertForSequenceClassification):
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path: Optional[Union[str, os.PathLike]], *model_args, **kwargs):
+        print('model_args:', model_args)
+        print('kwargs', kwargs)
         if os.path.exists(pretrained_model_name_or_path):
             weights = torch.load(os.path.join(pretrained_model_name_or_path, "pytorch_model.bin"), map_location=torch.device("cpu"))
         else:
@@ -84,8 +86,10 @@ class CoFiBertForSequenceClassification(BertForSequenceClassification):
                 weights.pop(name)
 
         if "config" not in kwargs:
-            config = AutoConfig.from_pretrained(pretrained_model_name_or_path)
+            config = AutoConfig.from_pretrained(pretrained_model_name_or_path, **kwargs)
+            print('NUM LABELS:', config.num_labels)
             config.do_layer_distill = False
+            #config.update(kwargs)
         else:
             config = kwargs["config"]
         

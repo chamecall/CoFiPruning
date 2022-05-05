@@ -3,7 +3,7 @@
 glue_low=(MRPC RTE STSB CoLA)
 glue_high=(MNLI QQP QNLI SST2)
 
-proj_dir=$n/space2
+proj_dir=$n/home/algernone/git-reps
 
 code_dir=${proj_dir}/CoFiPruning
 
@@ -74,6 +74,39 @@ if [[ $pruning_type == None ]]; then
   batch_size=64
 fi
 
+echo $code_dir/run_glue_prune.py \
+	   --output_dir ${output_dir} \
+	   --logging_steps ${logging_steps} \
+	   --task_name ${task_name} \
+	   --model_name_or_path ${model_name_or_path} \
+	   --ex_name ${ex_name} \
+	   --do_train \
+	   --do_eval \
+	   --max_seq_length ${max_seq_length} \
+	   --per_device_train_batch_size ${batch_size} \
+	   --per_device_eval_batch_size 32 \
+	   --learning_rate ${learning_rate} \
+	   --reg_learning_rate ${reg_learning_rate} \
+	   --num_train_epochs ${epochs} \
+	   --overwrite_output_dir \
+	   --save_steps ${save_steps} \
+	   --eval_steps ${eval_steps} \
+	   --evaluation_strategy steps \
+	   --seed ${seed} \
+	   --pruning_type ${pruning_type} \
+     --pretrained_pruned_model ${pretrained_pruned_model} \
+     --target_sparsity $target_sparsity \
+     --freeze_embeddings \
+     --do_distill \
+     --do_layer_distill \
+     --distillation_path $distillation_path \
+     --distill_ce_loss_alpha $distill_ce_loss_alpha \
+     --distill_loss_alpha $distill_loss_alpha \
+     --distill_temp $distill_temp \
+     --scheduler_type $scheduler_type \
+     --layer_distill_version $layer_distill_version
+
+     
 python3 $code_dir/run_glue_prune.py \
 	   --output_dir ${output_dir} \
 	   --logging_steps ${logging_steps} \

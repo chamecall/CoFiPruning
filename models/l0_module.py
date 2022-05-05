@@ -1,7 +1,6 @@
 import pdb
 
 from re import L
-from black import main
 import torch
 import math
 import numpy as np
@@ -81,6 +80,11 @@ class L0Module(Module):
             logger.info(f"***** {type} *****")
             logger.info(f"z.shape", self.z_logas[type].shape)
             logger.info(f"size", self.sizes[type])
+
+            print(f"***** {type} *****")
+            print(f"z.shape", self.z_logas[type].shape)
+            print(f"size", self.sizes[type])
+
         logger.info(f"prunable model size: {self.prunable_model_size}")
 
     def set_lagrangian_warmup_steps(self, lagrangian_warmup):

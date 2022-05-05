@@ -89,7 +89,7 @@ class CoFiTrainer(Trainer):
         self.additional_args = additional_args
 
         self.l0_module = l0_module
-        self.prepruning_finetune_steps = 0
+        self.prepruning_finetune_steps = 1
         self.start_prune = False
 
         self.l0_optimizer = None
@@ -174,7 +174,7 @@ class CoFiTrainer(Trainer):
         
         if self.l0_module is not None:
             lagrangian_warmup_steps = self.additional_args.lagrangian_warmup_epochs * num_update_steps_per_epoch
-            self.prepruning_finetune_steps = self.additional_args.prepruning_finetune_epochs * num_update_steps_per_epoch
+            #self.prepruning_finetune_steps = self.additional_args.prepruning_finetune_epochs * num_update_steps_per_epoch
             self.l0_module.set_lagrangian_warmup_steps(lagrangian_warmup_steps)
             logger.info(f"Prepruning finetune steps: {self.prepruning_finetune_steps}")
             logger.info(f"Lagrangian warmup steps: {lagrangian_warmup_steps}")
@@ -240,7 +240,7 @@ class CoFiTrainer(Trainer):
         train_pbar = trange(epochs_trained, int(
             np.ceil(num_train_epochs)), desc="Epoch", disable=disable_tqdm)
 
-        self.evaluate()
+        #self.evaluate()
 
         # training
         for epoch in range(epochs_trained, int(np.ceil(num_train_epochs))):
